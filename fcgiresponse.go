@@ -47,10 +47,13 @@ func (fcgi_response *FCGIResponse) ParseStdouts() (*FCGIHTTPResponse, error) {
 		line = strings.TrimSuffix(line, "\r\n")
 		if len(line) != 0 {
 			header_arr := strings.SplitN(line, ": ", 2)
-			response.Headers[header_arr[0]] = header_arr[1]
-			if header_arr[0] == "Status" {
-				status_code_str := header_arr[1][:3]
-				response.ResponseCode, err = strconv.Atoi(status_code_str)
+			if len(header_arr) > 1 {
+				//println(header_arr[0], header_arr[1])
+				response.Headers[header_arr[0]] = header_arr[1]
+				if header_arr[0] == "Status" {
+					status_code_str := header_arr[1][:3]
+					response.ResponseCode, err = strconv.Atoi(status_code_str)
+				}
 			}
 		} else {
 			// end of headers

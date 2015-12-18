@@ -3,6 +3,9 @@ I've exported from code.google.com/p/go-fastcgi-client and upgraded a little.
 
 Anyway, it's not production-ready, but I'm working on it.
 
+### TODO
+增加post和上传文件的支持
+
 ### Example usage ###
     fcgi, err := fcgiclient.New("127.0.0.1", 9000)
     if err != nil {
