@@ -366,21 +366,20 @@ func headers2env(header http.Header) map[string]string {
 }
 
 // FCGIClient.HTTPRequest - receives HTTP Request and send it to FCGI-server
-func (this *FCGIClient) DoHTTPRequest(http_request *http.Request, script_filename string) (*FCGIHTTPResponse, error) {
-
+func (this *FCGIClient) DoHTTPRequest(req *http.Request, script_filename string) (*FCGIHTTPResponse, error) {
 	env := make(map[string]string)
-	env["REQUEST_METHOD"] = http_request.Method
+	env["REQUEST_METHOD"] = req.Method
 	env["SCRIPT_FILENAME"] = script_filename
 	env["SERVER_SOFTWARE"] = "go / fcgiclient"
-	env["REMOTE_ADDR"] = http_request.RemoteAddr
-	env["SERVER_PROTOCOL"] = http_request.Proto
-	env["REQUEST_URI"] = http_request.URL.Path
-	env["DOCUMENT_URI"] = http_request.URL.Path
-	env["SCRIPT_NAME"] = http_request.URL.Path
-	env["QUERY_STRING"] = http_request.URL.RawQuery
+	env["REMOTE_ADDR"] = req.RemoteAddr
+	env["SERVER_PROTOCOL"] = req.Proto
+	env["REQUEST_URI"] = req.URL.Path
+	env["DOCUMENT_URI"] = req.URL.Path
+	env["SCRIPT_NAME"] = req.URL.Path
+	env["QUERY_STRING"] = req.URL.RawQuery
 
 	// HTTP Headers processing
-	headers_map := headers2env(http_request.Header)
+	headers_map := headers2env(req.Header)
 	for k, v := range headers_map {
 		env[k] = v
 	}
